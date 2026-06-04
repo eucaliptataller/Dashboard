@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Eucalipta · Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#fff5e9;--sage:#aac395;--forest:#749558;--sky:#afd3d8;
+  --dark:#2f3334;--white:#fff;--red:#c0392b;--orange:#e67e22;
+  --teal:#1a7a6e;--light-sage:#d6e8d0;--light-sky:#dff0f3;
+  --card-shadow:0 2px 16px rgba(47,51,52,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;padding-bottom:80px}
+
+/* HEADER */
+header{background:var(--dark);padding:18px 20px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--cream);font-style:italic;line-height:1}
+.brand-sub{font-size:9px;letter-spacing:3px;color:var(--sage);text-transform:uppercase;margin-top:3px}
+.header-leaf{font-size:28px;opacity:.85}
+
+/* MONTH NAV */
+.month-nav{background:var(--forest);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.month-nav button{background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.month-nav button:hover{background:rgba(255,255,255,.3)}
+.month-nav button:disabled{opacity:.3;cursor:default}
+.month-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:1px;color:#fff;text-align:center}
+.month-year{font-size:10px;letter-spacing:2px;opacity:.8;text-transform:uppercase;color:#fff;text-align:center}
+
+main{padding:16px;max-width:600px;margin:0 auto}
+
+/* SALDO */
+.saldo-card{background:var(--dark);border-radius:20px;padding:24px 24px 20px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:var(--card-shadow)}
+.saldo-card::before{content:'🌿';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:60px;opacity:.12}
+.saldo-label{font-size:10px;letter-spacing:3px;color:var(--sage);text-transform:uppercase;margin-bottom:6px}
+.saldo-value{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600;color:var(--cream);line-height:1;margin-bottom:12px}
+.saldo-value.negative{color:#e74c3c}
+.saldo-breakdown{display:flex;gap:16px}
+.saldo-pill{background:rgba(255,255,255,.08);border-radius:8px;padding:8px 12px;flex:1}
+.saldo-pill .pill-label{font-size:9px;letter-spacing:2px;color:var(--sage);text-transform:uppercase;margin-bottom:3px}
+.saldo-pill .pill-value{font-size:15px;font-weight:600;color:#fff}
+.saldo-pill.gastos .pill-value{color:#e74c3c}
+
+/* OCUPACION */
+.ocupacion-card{background:#fff;border-radius:16px;padding:18px 20px;margin-bottom:16px;box-shadow:var(--card-shadow)}
+.card-title{font-size:10px;letter-spacing:3px;color:var(--forest);text-transform:uppercase;margin-bottom:14px;font-weight:600}
+.ocupacion-numbers{display:flex;justify-content:space-between;margin-bottom:6px;align-items:baseline}
+.ocu-big{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--dark)}
+.ocu-total{font-size:12px;color:#888}
+.ocu-pct{font-size:13px;font-weight:600;color:var(--forest)}
+.progress-bar{height:8px;background:var(--light-sage);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--sage),var(--forest));border-radius:4px;transition:width 1s ease}
+
+/* STAT CARDS */
+.cuotas-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+.stat-card{background:#fff;border-radius:14px;padding:16px 12px;text-align:center;box-shadow:var(--card-shadow);cursor:pointer;border:2.5px solid transparent;transition:all .2s;user-select:none}
+.stat-card:active{transform:scale(.96)}
+.stat-card.pagadas.active-filter{border-color:var(--forest);background:#f0f7ec}
+.stat-card.pendientes.active-filter{border-color:var(--orange);background:#fdf4ea}
+.stat-card.vacios.active-filter{border-color:var(--sky);background:#f0f7f9}
+.stat-icon{font-size:22px;margin-bottom:6px;display:block}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;line-height:1;margin-bottom:4px}
+.stat-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#888;font-weight:500}
+.stat-card.pagadas .stat-num{color:var(--forest)}
+.stat-card.pendientes .stat-num{color:var(--orange)}
+.stat-card.vacios .stat-num{color:#5aacb8}
+
+/* BREAKDOWN */
+.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.breakdown-card{background:#fff;border-radius:14px;padding:16px;box-shadow:var(--card-shadow)}
+.breakdown-title{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.breakdown-title.ing{color:var(--teal)}.breakdown-title.gas{color:var(--red)}
+.breakdown-total{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:10px}
+.breakdown-total.ing{color:var(--teal)}.breakdown-total.gas{color:var(--red)}
+.breakdown-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--cream);font-size:11px}
+.breakdown-item:last-child{border-bottom:none}
+.item-name{color:#666}.item-val{font-weight:600;color:var(--dark)}
+.add-btn{background:none;border:1px solid currentColor;border-radius:4px;padding:2px 7px;font-size:9px;letter-spacing:1px;cursor:pointer;font-family:'Montserrat',sans-serif;opacity:.7}
+.add-btn:hover{opacity:1}
+
+/* DIAS */
+.section-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#aaa;font-weight:600;margin:18px 0 10px}
+.dias-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.dias-scroll::-webkit-scrollbar{display:none}
+.dia-chip{background:#fff;border-radius:12px;padding:14px 16px;min-width:110px;flex-shrink:0;box-shadow:var(--card-shadow);cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.dia-chip.active{border-color:var(--forest)}
+.dia-name{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:600;margin-bottom:6px}
+.dia-alumnos{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--dark);line-height:1}
+.dia-sub{font-size:10px;color:#999;margin-top:2px}
+.dia-bar{height:3px;background:var(--light-sage);border-radius:2px;margin-top:8px;overflow:hidden}
+.dia-bar-fill{height:100%;background:var(--forest);border-radius:2px}
+
+/* ALUMNOS LIST */
+.alumnos-card{background:#fff;border-radius:16px;padding:18px 20px;box-shadow:var(--card-shadow);margin-bottom:16px}
+.list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.list-title{font-size:10px;letter-spacing:3px;color:var(--forest);text-transform:uppercase;font-weight:600}
+.list-actions{display:flex;gap:8px;align-items:center}
+.list-count{font-size:11px;color:#aaa}
+.icon-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:4px;border-radius:6px;transition:background .15s}
+.icon-btn:hover{background:var(--light-sage)}
+
+.filter-banner{display:none;align-items:center;gap:8px;background:var(--light-sage);border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:11px;color:var(--forest);font-weight:600}
+.filter-banner.show{display:flex}
+.filter-banner.pendientes-banner{background:#fdf4ea;color:var(--orange)}
+.filter-banner.vacios-banner{background:#e8f6f8;color:#5aacb8}
+.clear-btn{margin-left:auto;background:none;border:none;cursor:pointer;font-size:14px;color:#888}
+
+.alumno-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--cream);gap:12px;cursor:pointer;transition:background .15s;border-radius:4px;margin:0 -4px;padding-left:4px;padding-right:4px}
+.alumno-row:last-child{border-bottom:none}
+.alumno-row:hover{background:var(--cream)}
+.alumno-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;color:#fff}
+.alumno-avatar.pagado{background:var(--forest)}
+.alumno-avatar.pendiente{background:var(--orange)}
+.alumno-avatar.vacio{background:#d4eaed;color:#5aacb8}
+.alumno-info{flex:1;min-width:0}
+.alumno-nombre{font-size:13px;font-weight:500;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.alumno-turno{font-size:10px;color:#999;margin-top:1px}
+.alumno-monto{text-align:right;flex-shrink:0}
+.monto-val{font-size:13px;font-weight:600}
+.monto-val.pagado{color:var(--forest)}.monto-val.pendiente{color:var(--orange)}.monto-val.vacio{color:#b0d4d9}
+.monto-status{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#bbb;margin-top:1px}
+.vacio-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--cream);gap:12px;opacity:.5}
+.vacio-row:last-child{border-bottom:none}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:40px 20px;color:#bbb}
+.empty-state .empty-icon{font-size:40px;margin-bottom:12px}
+.empty-state p{font-size:13px}
+
+/* SYNC */
+.sync-badge{position:fixed;bottom:20px;right:16px;background:var(--dark);color:#fff;border-radius:50px;padding:10px 16px;font-size:11px;letter-spacing:1px;display:flex;align-items:center;gap:6px;box-shadow:0 4px 20px rgba(0,0,0,.25);cursor:pointer;transition:background .2s;z-index:50}
+.sync-badge:hover{background:var(--forest)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--sage)}
+.sync-dot.loading{animation:pulse 1s infinite;background:var(--orange)}
+.sync-dot.error{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .5s}
+.loading-overlay.hidden{opacity:0;pointer-events:none}
+.loading-leaf{font-size:48px;animation:bounce 1.2s ease infinite}
+.loading-text{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--forest);margin-top:16px;font-style:italic}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* ══ MODAL ══ */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(47,51,52,.55);z-index:200;align-items:flex-end;justify-content:center}
+.modal-backdrop.open{display:flex}
+.modal{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:600px;padding:28px 24px 40px;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--dark)}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#aaa;padding:4px}
+
+/* FORM */
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:600;margin-bottom:6px}
+.form-input{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;font-family:'Montserrat',sans-serif;color:var(--dark);background:#fafafa;transition:border-color .2s;outline:none}
+.form-input:focus{border-color:var(--sage);background:#fff}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-select{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;font-family:'Montserrat',sans-serif;color:var(--dark);background:#fafafa;outline:none;cursor:pointer}
+.form-select:focus{border-color:var(--sage)}
+.btn-primary{width:100%;padding:14px;background:var(--forest);color:#fff;border:none;border-radius:12px;font-size:13px;letter-spacing:1px;font-family:'Montserrat',sans-serif;font-weight:600;cursor:pointer;margin-top:8px;transition:background .2s}
+.btn-primary:hover{background:var(--dark)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.form-hint{font-size:11px;color:#aaa;margin-top:4px}
+.modal-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--cream);border-radius:10px;padding:4px}
+.modal-tab{flex:1;padding:8px;text-align:center;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:600;border-radius:7px;cursor:pointer;border:none;background:none;color:#aaa;font-family:'Montserrat',sans-serif;transition:all .2s}
+.modal-tab.active{background:#fff;color:var(--forest);box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--dark);color:#fff;padding:12px 24px;border-radius:50px;font-size:12px;letter-spacing:1px;z-index:500;transition:transform .3s;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{background:var(--forest)}
+.toast.error{background:var(--red)}
+
+@media(min-width:520px){main{padding:20px}.saldo-value{font-size:48px}.stat-num{font-size:36px}}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-leaf">🌿</div>
+  <div class="loading-text">Cargando datos...</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<header>
+  <div><div class="brand-name">Eucalipta</div><div class="brand-sub">Taller de Cerámica</div></div>
+  <span class="header-leaf">🌿</span>
+</header>
+
+<div class="month-nav">
+  <button id="prevMonth" onclick="changeMonth(-1)">‹</button>
+  <div><div class="month-name" id="monthName">—</div><div class="month-year" id="monthYear">—</div></div>
+  <button id="nextMonth" onclick="changeMonth(1)">›</button>
+</div>
+
+<main>
+  <div class="saldo-card">
+    <div class="saldo-label">Saldo neto del mes</div>
+    <div class="saldo-value" id="saldoNeto">$0</div>
+    <div class="saldo-breakdown">
+      <div class="saldo-pill"><div class="pill-label">Ingresos</div><div class="pill-value" id="totalIngresos">$0</div></div>
+      <div class="saldo-pill gastos"><div class="pill-label">Gastos</div><div class="pill-value" id="totalGastos">$0</div></div>
+    </div>
+  </div>
+
+  <div class="ocupacion-card">
+    <div class="card-title">Ocupación del taller</div>
+    <div class="ocupacion-numbers">
+      <div><span class="ocu-big" id="alumnosActivos">0</span><span class="ocu-total"> / 90 lugares</span></div>
+      <span class="ocu-pct" id="ocupPct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="ocupBar" style="width:0%"></div></div>
+  </div>
+
+  <div class="cuotas-grid">
+    <div class="stat-card pagadas" id="filterPagadas" onclick="toggleFilter('pagadas')">
+      <span class="stat-icon">✅</span><div class="stat-num" id="cuotasPagadas">0</div><div class="stat-label">Pagaron</div>
+    </div>
+    <div class="stat-card pendientes" id="filterPendientes" onclick="toggleFilter('pendientes')">
+      <span class="stat-icon">⏳</span><div class="stat-num" id="cuotasPendientes">0</div><div class="stat-label">Pendiente</div>
+    </div>
+    <div class="stat-card vacios" id="filterVacios" onclick="toggleFilter('vacios')">
+      <span class="stat-icon">🪑</span><div class="stat-num" id="lugaresVacios">0</div><div class="stat-label">Vacíos</div>
+    </div>
+  </div>
+
+  <div class="two-cols">
+    <div class="breakdown-card">
+      <div class="breakdown-title ing">
+        <span>Ingresos</span>
+        <button class="add-btn" style="color:var(--teal)" onclick="openModal('ingresoExtra')">+ Extra</button>
+      </div>
+      <div class="breakdown-total ing" id="ingresosTotal">$0</div>
+      <div id="ingresosDetalle"></div>
+    </div>
+    <div class="breakdown-card">
+      <div class="breakdown-title gas">
+        <span>Gastos</span>
+        <button class="add-btn" style="color:var(--red)" onclick="openModal('gasto')">+ Gasto</button>
+      </div>
+      <div class="breakdown-total gas" id="gastosTotal">$0</div>
+      <div id="gastosDetalle"></div>
+    </div>
+  </div>
+
+  <div class="section-label">Por día</div>
+  <div class="dias-scroll" id="diasScroll"></div>
+
+  <div style="margin-top:18px"></div>
+  <div class="alumnos-card">
+    <div class="list-header">
+      <span class="list-title" id="listTitle">Todos los alumnos</span>
+      <div class="list-actions">
+        <span class="list-count" id="listCount"></span>
+        <button class="icon-btn" onclick="openModal('alumno')" title="Agregar alumno">➕</button>
+      </div>
+    </div>
+    <div class="filter-banner" id="filterBanner">
+      <span id="filterBannerText"></span>
+      <button class="clear-btn" onclick="clearFilter()">✕</button>
+    </div>
+    <div id="alumnosList"></div>
+  </div>
+</main>
+
+<div class="sync-badge" id="syncBadge" onclick="loadData()">
+  <div class="sync-dot" id="syncDot"></div>
+  <span id="syncText">Actualizar</span>
+</div>
+
+<!-- ══ MODAL ══════════════════════════════════════════════════ -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+<div class="modal" id="modal">
+  <div class="modal-header">
+    <div class="modal-title" id="modalTitle">—</div>
+    <button class="modal-close" onclick="closeModalNow()">✕</button>
+  </div>
+  <div id="modalBody"></div>
+</div>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────
+// Reemplazá con la URL de tu Apps Script Web App deployment
+const API_URL = 'https://script.google.com/macros/s/AKfycbyVA96U_XGJ24yIJ9sttYwf5C7NDZT_E2kT0tioSbAy5xvSJHqenPqhuPaiHPOzxmOT/exec';
+
+const MESES_ORDEN = ['Jun-26','Jul-26','Ago-26','Sep-26','Oct-26','Nov-26','Dic-26','Ene-27','Feb-27','Mar-27','Abr-27','May-27'];
+const MESES_NOMBRES = {'Jun-26':'Junio','Jul-26':'Julio','Ago-26':'Agosto','Sep-26':'Septiembre','Oct-26':'Octubre','Nov-26':'Noviembre','Dic-26':'Diciembre','Ene-27':'Enero','Feb-27':'Febrero','Mar-27':'Marzo','Abr-27':'Abril','May-27':'Mayo'};
+const DIAS_ORDEN = ['LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO'];
+const MAX_POR_DIA = 15, MAX_TOTAL = 90;
+
+let mesData = null, currentMonthIdx = 0, selectedDia = null, activeFilter = null;
+const fmt = n => n ? '$' + Math.round(n).toLocaleString('es-AR') : '$0';
+const initials = n => n.trim().split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+const currentMes = () => MESES_ORDEN[currentMonthIdx];
+
+// ── TOAST ─────────────────────────────────────────────────────────
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+// ── API ───────────────────────────────────────────────────────────
+async function apiGet(params={}) {
+  const url = API_URL + '?' + new URLSearchParams({...params, mes: currentMes()});
+  const res = await fetch(url);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+async function apiPost(body={}) {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({...body, mes: currentMes()})
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+// ── LOAD ──────────────────────────────────────────────────────────
+async function loadData() {
+  const dot = document.getElementById('syncDot'), txt = document.getElementById('syncText');
+  dot.className = 'sync-dot loading'; txt.textContent = 'Cargando...';
+  try {
+    mesData = await apiGet({ action: 'getData' });
+    renderAll();
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    dot.className = 'sync-dot'; txt.textContent = 'Actualizado ✓';
+    setTimeout(() => txt.textContent = 'Actualizar', 2500);
+  } catch(e) {
+    dot.className = 'sync-dot error'; txt.textContent = 'Error';
+    showToast('Error al cargar: ' + e.message, 'error');
+    document.getElementById('loadingOverlay').classList.add('hidden');
+  }
+}
+
+// ── MONTH ─────────────────────────────────────────────────────────
+function changeMonth(dir) {
+  const n = currentMonthIdx + dir;
+  if (n < 0 || n >= MESES_ORDEN.length) return;
+  currentMonthIdx = n; selectedDia = null; activeFilter = null;
+  mesData = null;
+  document.getElementById('loadingOverlay').classList.remove('hidden');
+  loadData();
+}
+
+// ── FILTER ────────────────────────────────────────────────────────
+function toggleFilter(type) {
+  activeFilter = activeFilter === type ? null : type;
+  selectedDia = null;
+  updateFilterUI(); renderDias(); renderAlumnosList();
+}
+function clearFilter() { activeFilter = null; updateFilterUI(); renderDias(); renderAlumnosList(); }
+
+function updateFilterUI() {
+  ['pagadas','pendientes','vacios'].forEach(f => {
+    document.getElementById('filter'+f[0].toUpperCase()+f.slice(1)).classList.toggle('active-filter', activeFilter===f);
+  });
+  const banner = document.getElementById('filterBanner'), bt = document.getElementById('filterBannerText');
+  if (activeFilter) {
+    const labels = {pagadas:'✅ Mostrando: pagaron',pendientes:'⏳ Mostrando: pendientes',vacios:'🪑 Mostrando: lugares vacíos'};
+    const cls = {pagadas:'',pendientes:'pendientes-banner',vacios:'vacios-banner'};
+    banner.className = 'filter-banner show '+(cls[activeFilter]||'');
+    bt.textContent = labels[activeFilter];
+  } else banner.className = 'filter-banner';
+}
+
+function selectDia(dia) {
+  selectedDia = selectedDia === dia ? null : dia;
+  activeFilter = null; updateFilterUI(); renderDias(); renderAlumnosList();
+}
+
+// ── RENDER ALL ────────────────────────────────────────────────────
+function renderAll() {
+  if (!mesData) return;
+  const mes = currentMes();
+  document.getElementById('monthName').textContent = MESES_NOMBRES[mes] || mes;
+  document.getElementById('monthYear').textContent = mes.includes('27') ? '2027' : '2026';
+  document.getElementById('prevMonth').disabled = currentMonthIdx === 0;
+  document.getElementById('nextMonth').disabled = currentMonthIdx === MESES_ORDEN.length - 1;
+
+  const alumnos = mesData.alumnos || [];
+  const pagados = alumnos.filter(a=>a.pagado).length;
+  const pct = Math.round((alumnos.length/MAX_TOTAL)*100);
+
+  const saldo = mesData.saldo_neto || 0;
+  const el = document.getElementById('saldoNeto');
+  el.textContent = fmt(saldo); el.className = 'saldo-value'+(saldo<0?' negative':'');
+  document.getElementById('totalIngresos').textContent = fmt(mesData.total_ingresos);
+  document.getElementById('totalGastos').textContent = fmt(mesData.total_gastos);
+  document.getElementById('alumnosActivos').textContent = alumnos.length;
+  document.getElementById('ocupPct').textContent = pct+'%';
+  document.getElementById('ocupBar').style.width = pct+'%';
+  document.getElementById('cuotasPagadas').textContent = pagados;
+  document.getElementById('cuotasPendientes').textContent = alumnos.filter(a=>!a.pagado).length;
+  document.getElementById('lugaresVacios').textContent = MAX_TOTAL - alumnos.length;
+
+  // Ingresos detalle
+  const ing = mesData.ingresos || {};
+  document.getElementById('ingresosTotal').textContent = fmt(mesData.total_ingresos);
+  document.getElementById('ingresosDetalle').innerHTML = [
+    ['Cuota',ing.cuota],['Arcilla',ing.arcilla],['Horneada',ing.horneada_extra],
+    ['Seminario',ing.seminario],['Otros',ing.otros],['Extras',ing.extras]
+  ].filter(([,v])=>v>0).map(([n,v])=>
+    `<div class="breakdown-item"><span class="item-name">${n}</span><span class="item-val">${fmt(v)}</span></div>`
+  ).join('') || '<div class="breakdown-item"><span class="item-name" style="color:#ccc">Sin datos</span></div>';
+
+  // Gastos detalle
+  const gas = mesData.gastos || {};
+  document.getElementById('gastosTotal').textContent = fmt(mesData.total_gastos);
+  document.getElementById('gastosDetalle').innerHTML = [
+    ['Taller',gas.taller],['Generales',gas.generales]
+  ].filter(([,v])=>v>0).map(([n,v])=>
+    `<div class="breakdown-item"><span class="item-name">${n}</span><span class="item-val">${fmt(v)}</span></div>`
+  ).join('') || '<div class="breakdown-item"><span class="item-name" style="color:#ccc">Sin gastos</span></div>';
+
+  updateFilterUI(); renderDias(); renderAlumnosList();
+}
+
+function renderDias() {
+  const alumnos = mesData?.alumnos || [];
+  const byDia = {}; DIAS_ORDEN.forEach(d=>byDia[d]={total:0,pagados:0});
+  alumnos.forEach(a=>{if(byDia[a.dia]){byDia[a.dia].total++;if(a.pagado)byDia[a.dia].pagados++;}});
+  document.getElementById('diasScroll').innerHTML = DIAS_ORDEN.map(dia=>{
+    const {total,pagados} = byDia[dia];
+    const pct = Math.round((total/MAX_POR_DIA)*100);
+    return `<div class="dia-chip ${selectedDia===dia?'active':''}" onclick="selectDia('${dia}')">
+      <div class="dia-name">${dia[0]+dia.slice(1).toLowerCase()}</div>
+      <div class="dia-alumnos">${total}</div>
+      <div class="dia-sub">${pagados} pag · ${MAX_POR_DIA-total} libres</div>
+      <div class="dia-bar"><div class="dia-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderAlumnosList() {
+  const alumnos = mesData?.alumnos || [];
+  const listEl = document.getElementById('alumnosList');
+  const titleEl = document.getElementById('listTitle');
+  const countEl = document.getElementById('listCount');
+  let filtered = selectedDia ? alumnos.filter(a=>a.dia===selectedDia) : alumnos;
+
+  if (activeFilter === 'pagadas') {
+    filtered = filtered.filter(a=>a.pagado);
+    titleEl.textContent = '✅ Pagaron';
+  } else if (activeFilter === 'pendientes') {
+    filtered = filtered.filter(a=>!a.pagado);
+    titleEl.textContent = '⏳ Pendientes de pago';
+  } else if (activeFilter === 'vacios') {
+    const source = selectedDia ? [selectedDia] : DIAS_ORDEN;
+    const byDia = {}; DIAS_ORDEN.forEach(d=>byDia[d]=0);
+    alumnos.forEach(a=>{if(byDia[a.dia]!==undefined)byDia[a.dia]++;});
+    titleEl.textContent = '🪑 Lugares vacíos';
+    let html = '', total = 0;
+    source.forEach(dia=>{
+      const count = MAX_POR_DIA - byDia[dia]; total += count;
+      if(!count) return;
+      html += `<div style="padding:8px 0 4px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:600;border-bottom:1px solid var(--cream)">${dia[0]+dia.slice(1).toLowerCase()} — ${count} libre${count>1?'s':''}</div>`;
+      for(let i=0;i<count;i++){
+        html += `<div class="vacio-row" onclick="openModal('alumno','${dia}')">
+          <div class="alumno-avatar vacio">○</div>
+          <div class="alumno-info"><div class="alumno-nombre" style="color:#aaa">Lugar disponible</div><div class="alumno-turno">${dia[0]+dia.slice(1).toLowerCase()} · toque para agregar</div></div>
+          <div class="alumno-monto"><div class="monto-val vacio">+</div></div>
+        </div>`;
+      }
+    });
+    countEl.textContent = total + ' lugares';
+    listEl.innerHTML = html || `<div class="empty-state"><div class="empty-icon">🎉</div><p>¡Taller completo!</p></div>`;
+    return;
+  } else {
+    titleEl.textContent = selectedDia ? selectedDia[0]+selectedDia.slice(1).toLowerCase() : 'Todos los alumnos';
+  }
+
+  countEl.textContent = filtered.length + ' alumno'+(filtered.length!==1?'s':'');
+  if(!filtered.length){
+    listEl.innerHTML = `<div class="empty-state"><div class="empty-icon">🌱</div><p>Sin alumnos para mostrar</p></div>`;
+    return;
+  }
+  const sorted = activeFilter==='pendientes' ? filtered : [...filtered].sort((a,b)=>b.pagado-a.pagado);
+  listEl.innerHTML = sorted.map(a=>{
+    const cls = a.pagado?'pagado':'pendiente';
+    return `<div class="alumno-row" onclick="openModal('pago',null,${JSON.stringify(a).replace(/'/g,'&apos;')})">
+      <div class="alumno-avatar ${cls}">${initials(a.nombre)}</div>
+      <div class="alumno-info">
+        <div class="alumno-nombre">${a.nombre}</div>
+        <div class="alumno-turno">${a.dia[0]+a.dia.slice(1).toLowerCase()}${a.turno?' · '+a.turno:''}</div>
+      </div>
+      <div class="alumno-monto">
+        <div class="monto-val ${cls}">${a.pagado?fmt(a.total):'—'}</div>
+        <div class="monto-status">${a.pagado?'pagó':'pendiente'}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────
+function openModal(type, dia=null, alumno=null) {
+  const backdrop = document.getElementById('modalBackdrop');
+  const title = document.getElementById('modalTitle');
+  const body = document.getElementById('modalBody');
+  backdrop.classList.add('open');
+
+  if (type === 'pago') {
+    // Tabs: Registrar Pago | Editar Datos
+    title.textContent = alumno.nombre;
+    body.innerHTML = `
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchTab('pago','tab-pago','tab-editar')">💰 Pago</button>
+        <button class="modal-tab" onclick="switchTab('editar','tab-pago','tab-editar')">✏️ Editar</button>
+      </div>
+      <div id="tab-pago">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Seña $</label>
+            <input class="form-input" type="number" id="inp-sena" value="${alumno.sena||''}" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Saldo $</label>
+            <input class="form-input" type="number" id="inp-saldo" value="${alumno.saldoPag||''}" placeholder="0">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Arcilla $</label>
+            <input class="form-input" type="number" id="inp-arcilla" value="${alumno.arcilla||''}" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Horneada $</label>
+            <input class="form-input" type="number" id="inp-horneada" value="${alumno.horneada||''}" placeholder="0">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Seminario $</label>
+            <input class="form-input" type="number" id="inp-seminario" value="${alumno.seminario||''}" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Otros $</label>
+            <input class="form-input" type="number" id="inp-otros" value="${alumno.otros||''}" placeholder="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fecha de pago</label>
+          <input class="form-input" type="date" id="inp-fecha" value="${alumno.fechaPago ? alumno.fechaPago.split('/').reverse().join('-') : ''}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notas</label>
+          <input class="form-input" type="text" id="inp-notas" value="${alumno.notas||''}" placeholder="Opcional">
+        </div>
+        <button class="btn-primary" onclick="submitPago(${alumno.rowIndex})">Guardar pago en Sheet</button>
+      </div>
+      <div id="tab-editar" style="display:none">
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
+          <input class="form-input" type="text" id="inp-nombre-edit" value="${alumno.nombre}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Teléfono</label>
+          <input class="form-input" type="tel" id="inp-tel-edit" value="${alumno.telefono||''}" placeholder="Sin 0 ni 15">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Horario</label>
+          <input class="form-input" type="text" id="inp-turno-edit" value="${alumno.turno||''}" placeholder="Ej: 19 a 21hs">
+        </div>
+        <button class="btn-primary" onclick="submitEditarAlumno(${alumno.rowIndex})">Guardar cambios</button>
+      </div>`;
+
+  } else if (type === 'alumno') {
+    title.textContent = 'Agregar alumno';
+    const preselDia = dia || selectedDia || '';
+    body.innerHTML = `
+      <div class="form-group">
+        <label class="form-label">Nombre y apellido</label>
+        <input class="form-input" type="text" id="inp-nombre" placeholder="Ej: María García" autofocus>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input class="form-input" type="tel" id="inp-tel" placeholder="2994123456">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Día</label>
+          <select class="form-select" id="inp-dia">
+            ${DIAS_ORDEN.map(d=>`<option value="${d}" ${d===preselDia?'selected':''}>${d[0]+d.slice(1).toLowerCase()}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Horario</label>
+          <input class="form-input" type="text" id="inp-turno" value="" placeholder="10 a 12hs">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Seña $</label>
+          <input class="form-input" type="number" id="inp-sena-nuevo" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Saldo $</label>
+          <input class="form-input" type="number" id="inp-saldo-nuevo" placeholder="0">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fecha de pago</label>
+        <input class="form-input" type="date" id="inp-fecha-nuevo">
+      </div>
+      <button class="btn-primary" onclick="submitAgregarAlumno()">Agregar al Sheet</button>`;
+
+  } else if (type === 'gasto') {
+    title.textContent = 'Cargar gasto';
+    body.innerHTML = `
+      <div class="form-group">
+        <label class="form-label">Tipo</label>
+        <select class="form-select" id="inp-tipo-gasto">
+          <option value="taller">Gastos de Taller</option>
+          <option value="generales">Gastos Generales</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Concepto</label>
+        <input class="form-input" type="text" id="inp-concepto-gasto" placeholder="Ej: Electricista, Arcilla a granel...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Monto $</label>
+        <input class="form-input" type="number" id="inp-monto-gasto" placeholder="0">
+      </div>
+      <button class="btn-primary" onclick="submitGasto()">Guardar en Sheet</button>`;
+
+  } else if (type === 'ingresoExtra') {
+    title.textContent = 'Ingreso extra';
+    body.innerHTML = `
+      <div class="form-group">
+        <label class="form-label">Concepto</label>
+        <input class="form-input" type="text" id="inp-concepto-extra" placeholder="Ej: Venta de piezas, Taller puntual...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Monto $</label>
+        <input class="form-input" type="number" id="inp-monto-extra" placeholder="0">
+      </div>
+      <button class="btn-primary" onclick="submitIngresoExtra()">Guardar en Sheet</button>`;
+  }
+}
+
+function switchTab(active, id1, id2) {
+  document.getElementById(id1).style.display = active==='pago' ? '' : 'none';
+  document.getElementById(id2).style.display = active==='editar' ? '' : 'none';
+  document.querySelectorAll('.modal-tab').forEach((t,i)=>t.classList.toggle('active', (active==='pago'&&i===0)||(active==='editar'&&i===1)));
+}
+
+function closeModal(e) { if(e.target===document.getElementById('modalBackdrop')) closeModalNow(); }
+function closeModalNow() { document.getElementById('modalBackdrop').classList.remove('open'); }
+
+// ── SUBMIT HANDLERS ───────────────────────────────────────────────
+async function submitPago(rowIndex) {
+  const btn = document.querySelector('#tab-pago .btn-primary');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+  try {
+    await apiPost({
+      action: 'registrarPago', rowIndex,
+      sena:      numVal('inp-sena'),
+      saldoPag:  numVal('inp-saldo'),
+      arcilla:   numVal('inp-arcilla'),
+      horneada:  numVal('inp-horneada'),
+      seminario: numVal('inp-seminario'),
+      otros:     numVal('inp-otros'),
+      notas:     document.getElementById('inp-notas').value,
+      fechaPago: document.getElementById('inp-fecha').value,
+    });
+    showToast('Pago guardado ✓');
+    closeModalNow();
+    loadData();
+  } catch(e) { showToast(e.message, 'error'); btn.disabled=false; btn.textContent='Guardar pago en Sheet'; }
+}
+
+async function submitEditarAlumno(rowIndex) {
+  const btn = document.querySelector('#tab-editar .btn-primary');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+  try {
+    await apiPost({
+      action: 'editarAlumno', rowIndex,
+      nombre:   document.getElementById('inp-nombre-edit').value,
+      telefono: document.getElementById('inp-tel-edit').value,
+      turno:    document.getElementById('inp-turno-edit').value,
+    });
+    showToast('Alumno actualizado ✓');
+    closeModalNow(); loadData();
+  } catch(e) { showToast(e.message,'error'); btn.disabled=false; btn.textContent='Guardar cambios'; }
+}
+
+async function submitAgregarAlumno() {
+  const nombre = document.getElementById('inp-nombre').value.trim();
+  if(!nombre){ showToast('El nombre es obligatorio','error'); return; }
+  const btn = document.querySelector('#modalBody .btn-primary');
+  btn.disabled=true; btn.textContent='Guardando...';
+  try {
+    await apiPost({
+      action: 'agregarAlumno',
+      nombre, dia: document.getElementById('inp-dia').value,
+      telefono: document.getElementById('inp-tel').value,
+      turno:    document.getElementById('inp-turno').value,
+      sena:     numVal('inp-sena-nuevo'),
+      saldoPag: numVal('inp-saldo-nuevo'),
+      fechaPago: document.getElementById('inp-fecha-nuevo').value,
+    });
+    showToast(nombre + ' agregado ✓');
+    closeModalNow(); loadData();
+  } catch(e) { showToast(e.message,'error'); btn.disabled=false; btn.textContent='Agregar al Sheet'; }
+}
+
+async function submitGasto() {
+  const concepto = document.getElementById('inp-concepto-gasto').value.trim();
+  const monto    = numVal('inp-monto-gasto');
+  if(!concepto||!monto){ showToast('Completá concepto y monto','error'); return; }
+  const btn = document.querySelector('#modalBody .btn-primary');
+  btn.disabled=true; btn.textContent='Guardando...';
+  try {
+    await apiPost({ action:'cargarGasto', tipo: document.getElementById('inp-tipo-gasto').value, concepto, monto });
+    showToast('Gasto cargado ✓');
+    closeModalNow(); loadData();
+  } catch(e) { showToast(e.message,'error'); btn.disabled=false; btn.textContent='Guardar en Sheet'; }
+}
+
+async function submitIngresoExtra() {
+  const concepto = document.getElementById('inp-concepto-extra').value.trim();
+  const monto    = numVal('inp-monto-extra');
+  if(!concepto||!monto){ showToast('Completá concepto y monto','error'); return; }
+  const btn = document.querySelector('#modalBody .btn-primary');
+  btn.disabled=true; btn.textContent='Guardando...';
+  try {
+    await apiPost({ action:'cargarIngresoExtra', concepto, monto });
+    showToast('Ingreso extra guardado ✓');
+    closeModalNow(); loadData();
+  } catch(e) { showToast(e.message,'error'); btn.disabled=false; btn.textContent='Guardar en Sheet'; }
+}
+
+const numVal = id => { const v=parseFloat(document.getElementById(id)?.value); return isNaN(v)?0:v; };
+
+loadData();
+</script>
+</body>
+</html>
