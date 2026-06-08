@@ -14,21 +14,14 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Montserrat',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;padding-bottom:80px}
-
-/* HEADER */
 header{background:var(--dark);padding:18px 20px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
 .brand-name{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--cream);font-style:italic;line-height:1}
 .brand-sub{font-size:9px;letter-spacing:3px;color:var(--sage);text-transform:uppercase;margin-top:3px}
-.header-leaf{font-size:28px;opacity:.85}
-
-/* MONTH NAV */
 .month-nav{background:var(--forest);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
-.month-nav button{background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
-.month-nav button:hover{background:rgba(255,255,255,.3)}
+.month-nav button{background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .month-nav button:disabled{opacity:.3;cursor:default}
-.month-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:1px;color:#fff;text-align:center}
-.month-year{font-size:10px;letter-spacing:2px;opacity:.8;text-transform:uppercase;color:#fff;text-align:center}
-
+.month-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#fff;text-align:center}
+.month-year{font-size:10px;letter-spacing:2px;opacity:.8;color:#fff;text-align:center;text-transform:uppercase}
 main{padding:16px;max-width:600px;margin:0 auto}
 
 /* SALDO */
@@ -39,15 +32,15 @@ main{padding:16px;max-width:600px;margin:0 auto}
 .saldo-value.negative{color:#e74c3c}
 .saldo-breakdown{display:flex;gap:16px}
 .saldo-pill{background:rgba(255,255,255,.08);border-radius:8px;padding:8px 12px;flex:1}
-.saldo-pill .pill-label{font-size:9px;letter-spacing:2px;color:var(--sage);text-transform:uppercase;margin-bottom:3px}
-.saldo-pill .pill-value{font-size:15px;font-weight:600;color:#fff}
+.pill-label{font-size:9px;letter-spacing:2px;color:var(--sage);text-transform:uppercase;margin-bottom:3px}
+.pill-value{font-size:15px;font-weight:600;color:#fff}
 .saldo-pill.gastos .pill-value{color:#e74c3c}
 
 /* OCUPACION */
 .ocupacion-card{background:#fff;border-radius:16px;padding:18px 20px;margin-bottom:16px;box-shadow:var(--card-shadow)}
 .card-title{font-size:10px;letter-spacing:3px;color:var(--forest);text-transform:uppercase;margin-bottom:14px;font-weight:600}
-.ocupacion-numbers{display:flex;justify-content:space-between;margin-bottom:6px;align-items:baseline}
-.ocu-big{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--dark)}
+.ocu-numbers{display:flex;justify-content:space-between;margin-bottom:6px;align-items:baseline}
+.ocu-big{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600}
 .ocu-total{font-size:12px;color:#888}
 .ocu-pct{font-size:13px;font-weight:600;color:var(--forest)}
 .progress-bar{height:8px;background:var(--light-sage);border-radius:4px;overflow:hidden}
@@ -80,19 +73,29 @@ main{padding:16px;max-width:600px;margin:0 auto}
 .add-btn{background:none;border:1px solid currentColor;border-radius:4px;padding:2px 7px;font-size:9px;letter-spacing:1px;cursor:pointer;font-family:'Montserrat',sans-serif;opacity:.7}
 .add-btn:hover{opacity:1}
 
-/* DIAS */
+/* DÍAS */
 .section-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#aaa;font-weight:600;margin:18px 0 10px}
 .dias-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
 .dias-scroll::-webkit-scrollbar{display:none}
-.dia-chip{background:#fff;border-radius:12px;padding:14px 16px;min-width:110px;flex-shrink:0;box-shadow:var(--card-shadow);cursor:pointer;border:2px solid transparent;transition:border-color .2s}
-.dia-chip.active{border-color:var(--forest)}
-.dia-name{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:600;margin-bottom:6px}
-.dia-alumnos{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--dark);line-height:1}
-.dia-sub{font-size:10px;color:#999;margin-top:2px}
-.dia-bar{height:3px;background:var(--light-sage);border-radius:2px;margin-top:8px;overflow:hidden}
-.dia-bar-fill{height:100%;background:var(--forest);border-radius:2px}
 
-/* ALUMNOS LIST */
+/* DIA GROUP */
+.dia-group{flex-shrink:0}
+.dia-group-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:700;margin-bottom:6px;padding-left:2px}
+.dia-turnos{display:flex;flex-direction:column;gap:6px}
+.turno-chip{background:#fff;border-radius:12px;padding:12px 14px;min-width:120px;box-shadow:var(--card-shadow);cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.turno-chip.active{border-color:var(--forest)}
+.turno-chip.active-pendientes{border-color:var(--orange)}
+.turno-chip.active-vacios{border-color:var(--sky)}
+.turno-name{font-size:10px;letter-spacing:1px;color:var(--forest);font-weight:600;margin-bottom:4px}
+.turno-alumnos{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--dark);line-height:1}
+.turno-sub{font-size:10px;color:#999;margin-top:2px}
+.turno-dots{display:flex;gap:3px;margin-top:6px;flex-wrap:wrap}
+.turno-dot{width:8px;height:8px;border-radius:50%}
+.turno-dot.pagado{background:var(--forest)}
+.turno-dot.pendiente{background:var(--orange)}
+.turno-dot.libre{background:var(--light-sage);border:1px solid #ccc}
+
+/* ALUMNOS */
 .alumnos-card{background:#fff;border-radius:16px;padding:18px 20px;box-shadow:var(--card-shadow);margin-bottom:16px}
 .list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .list-title{font-size:10px;letter-spacing:3px;color:var(--forest);text-transform:uppercase;font-weight:600}
@@ -100,14 +103,13 @@ main{padding:16px;max-width:600px;margin:0 auto}
 .list-count{font-size:11px;color:#aaa}
 .icon-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:4px;border-radius:6px;transition:background .15s}
 .icon-btn:hover{background:var(--light-sage)}
-
-.filter-banner{display:none;align-items:center;gap:8px;background:var(--light-sage);border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:11px;color:var(--forest);font-weight:600}
+.filter-banner{display:none;align-items:center;gap:8px;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:11px;font-weight:600}
 .filter-banner.show{display:flex}
+.filter-banner.pagadas-banner{background:var(--light-sage);color:var(--forest)}
 .filter-banner.pendientes-banner{background:#fdf4ea;color:var(--orange)}
 .filter-banner.vacios-banner{background:#e8f6f8;color:#5aacb8}
 .clear-btn{margin-left:auto;background:none;border:none;cursor:pointer;font-size:14px;color:#888}
-
-.alumno-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--cream);gap:12px;cursor:pointer;transition:background .15s;border-radius:4px;margin:0 -4px;padding-left:4px;padding-right:4px}
+.alumno-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--cream);gap:12px;cursor:pointer;border-radius:4px;margin:0 -4px;padding-left:4px;padding-right:4px}
 .alumno-row:last-child{border-bottom:none}
 .alumno-row:hover{background:var(--cream)}
 .alumno-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;color:#fff}
@@ -121,16 +123,14 @@ main{padding:16px;max-width:600px;margin:0 auto}
 .monto-val{font-size:13px;font-weight:600}
 .monto-val.pagado{color:var(--forest)}.monto-val.pendiente{color:var(--orange)}.monto-val.vacio{color:#b0d4d9}
 .monto-status{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#bbb;margin-top:1px}
-.vacio-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--cream);gap:12px;opacity:.5}
+.vacio-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--cream);gap:12px;cursor:pointer}
 .vacio-row:last-child{border-bottom:none}
-
-/* EMPTY */
+.vacio-row:hover{background:var(--light-sky)}
 .empty-state{text-align:center;padding:40px 20px;color:#bbb}
-.empty-state .empty-icon{font-size:40px;margin-bottom:12px}
-.empty-state p{font-size:13px}
+.empty-icon{font-size:40px;margin-bottom:12px}
 
 /* SYNC */
-.sync-badge{position:fixed;bottom:20px;right:16px;background:var(--dark);color:#fff;border-radius:50px;padding:10px 16px;font-size:11px;letter-spacing:1px;display:flex;align-items:center;gap:6px;box-shadow:0 4px 20px rgba(0,0,0,.25);cursor:pointer;transition:background .2s;z-index:50}
+.sync-badge{position:fixed;bottom:20px;right:16px;background:var(--dark);color:#fff;border-radius:50px;padding:10px 16px;font-size:11px;letter-spacing:1px;display:flex;align-items:center;gap:6px;box-shadow:0 4px 20px rgba(0,0,0,.25);cursor:pointer;z-index:50}
 .sync-badge:hover{background:var(--forest)}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--sage)}
 .sync-dot.loading{animation:pulse 1s infinite;background:var(--orange)}
@@ -144,16 +144,17 @@ main{padding:16px;max-width:600px;margin:0 auto}
 .loading-text{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--forest);margin-top:16px;font-style:italic}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
-/* ══ MODAL ══ */
+/* MODAL */
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(47,51,52,.55);z-index:200;align-items:flex-end;justify-content:center}
 .modal-backdrop.open{display:flex}
-.modal{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:600px;padding:28px 24px 40px;animation:slideUp .3s ease}
+.modal{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:600px;padding:28px 24px 40px;animation:slideUp .3s ease;max-height:90vh;overflow-y:auto}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .modal-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--dark)}
-.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#aaa;padding:4px}
-
-/* FORM */
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#aaa}
+.modal-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--cream);border-radius:10px;padding:4px}
+.modal-tab{flex:1;padding:8px;text-align:center;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:600;border-radius:7px;cursor:pointer;border:none;background:none;color:#aaa;font-family:'Montserrat',sans-serif;transition:all .2s}
+.modal-tab.active{background:#fff;color:var(--forest);box-shadow:0 1px 6px rgba(0,0,0,.08)}
 .form-group{margin-bottom:16px}
 .form-label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:600;margin-bottom:6px}
 .form-input{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;font-family:'Montserrat',sans-serif;color:var(--dark);background:#fafafa;transition:border-color .2s;outline:none}
@@ -164,30 +165,24 @@ main{padding:16px;max-width:600px;margin:0 auto}
 .btn-primary{width:100%;padding:14px;background:var(--forest);color:#fff;border:none;border-radius:12px;font-size:13px;letter-spacing:1px;font-family:'Montserrat',sans-serif;font-weight:600;cursor:pointer;margin-top:8px;transition:background .2s}
 .btn-primary:hover{background:var(--dark)}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed}
-.form-hint{font-size:11px;color:#aaa;margin-top:4px}
-.modal-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--cream);border-radius:10px;padding:4px}
-.modal-tab{flex:1;padding:8px;text-align:center;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:600;border-radius:7px;cursor:pointer;border:none;background:none;color:#aaa;font-family:'Montserrat',sans-serif;transition:all .2s}
-.modal-tab.active{background:#fff;color:var(--forest);box-shadow:0 1px 6px rgba(0,0,0,.08)}
+
+/* TOAST */
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--dark);color:#fff;padding:12px 24px;border-radius:50px;font-size:12px;letter-spacing:1px;z-index:500;transition:transform .3s;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
-.toast.success{background:var(--forest)}
-.toast.error{background:var(--red)}
-
+.toast.success{background:var(--forest)}.toast.error{background:var(--red)}
 @media(min-width:520px){main{padding:20px}.saldo-value{font-size:48px}.stat-num{font-size:36px}}
 </style>
 </head>
 <body>
-
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-leaf">🌿</div>
   <div class="loading-text">Cargando datos...</div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <header>
   <div><div class="brand-name">Eucalipta</div><div class="brand-sub">Taller de Cerámica</div></div>
-  <span class="header-leaf">🌿</span>
+  <span style="font-size:28px;opacity:.85">🌿</span>
 </header>
 
 <div class="month-nav">
@@ -208,8 +203,8 @@ main{padding:16px;max-width:600px;margin:0 auto}
 
   <div class="ocupacion-card">
     <div class="card-title">Ocupación del taller</div>
-    <div class="ocupacion-numbers">
-      <div><span class="ocu-big" id="alumnosActivos">0</span><span class="ocu-total"> / 90 lugares</span></div>
+    <div class="ocu-numbers">
+      <div><span class="ocu-big" id="alumnosActivos">0</span><span class="ocu-total" id="capacidadTotal"> / 0 lugares</span></div>
       <span class="ocu-pct" id="ocupPct">0%</span>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="ocupBar" style="width:0%"></div></div>
@@ -246,7 +241,7 @@ main{padding:16px;max-width:600px;margin:0 auto}
     </div>
   </div>
 
-  <div class="section-label">Por día</div>
+  <div class="section-label">Por turno</div>
   <div class="dias-scroll" id="diasScroll"></div>
 
   <div style="margin-top:18px"></div>
@@ -266,12 +261,12 @@ main{padding:16px;max-width:600px;margin:0 auto}
   </div>
 </main>
 
-<div class="sync-badge" id="syncBadge" onclick="loadData()">
+<div class="sync-badge" onclick="loadData()">
   <div class="sync-dot" id="syncDot"></div>
   <span id="syncText">Actualizar</span>
 </div>
 
-<!-- ══ MODAL ══════════════════════════════════════════════════ -->
+<!-- MODAL -->
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
 <div class="modal" id="modal">
   <div class="modal-header">
@@ -284,18 +279,20 @@ main{padding:16px;max-width:600px;margin:0 auto}
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────────
-// Reemplazá con la URL de tu Apps Script Web App deployment
-const API_URL = 'https://script.google.com/macros/s/AKfycbyVA96U_XGJ24yIJ9sttYwf5C7NDZT_E2kT0tioSbAy5xvSJHqenPqhuPaiHPOzxmOT/exec';
+// Reemplazá con tu URL de Apps Script después del deploy
+const API_URL = 'https://script.google.com/macros/s/AKfycbyYU9znlwHPJBsXoYtQEWAUhC0ZiwQ4SuSmTCCPstugBjI8EZOyP32bwzk3n348cm0fVA/exec';
 
 const MESES_ORDEN = ['Jun-26','Jul-26','Ago-26','Sep-26','Oct-26','Nov-26','Dic-26','Ene-27','Feb-27','Mar-27','Abr-27','May-27'];
 const MESES_NOMBRES = {'Jun-26':'Junio','Jul-26':'Julio','Ago-26':'Agosto','Sep-26':'Septiembre','Oct-26':'Octubre','Nov-26':'Noviembre','Dic-26':'Diciembre','Ene-27':'Enero','Feb-27':'Febrero','Mar-27':'Marzo','Abr-27':'Abril','May-27':'Mayo'};
 const DIAS_ORDEN = ['LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO'];
-const MAX_POR_DIA = 15, MAX_TOTAL = 90;
 
-let mesData = null, currentMonthIdx = 0, selectedDia = null, activeFilter = null;
+let mesData = null, currentMonthIdx = 0, selectedTurnoKey = null, activeFilter = null;
+// selectedTurnoKey = "LUNES||19 a 21hs" | null
+
 const fmt = n => n ? '$' + Math.round(n).toLocaleString('es-AR') : '$0';
 const initials = n => n.trim().split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
 const currentMes = () => MESES_ORDEN[currentMonthIdx];
+const turnoKey = (dia, turno) => dia + '||' + turno;
 
 // ── TOAST ─────────────────────────────────────────────────────────
 function showToast(msg, type='success') {
@@ -312,12 +309,8 @@ async function apiGet(params={}) {
   if (data.error) throw new Error(data.error);
   return data;
 }
-
 async function apiPost(body={}) {
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify({...body, mes: currentMes()})
-  });
+  const res = await fetch(API_URL, { method:'POST', body: JSON.stringify({...body, mes: currentMes()}) });
   const data = await res.json();
   if (data.error) throw new Error(data.error);
   return data;
@@ -335,7 +328,7 @@ async function loadData() {
     setTimeout(() => txt.textContent = 'Actualizar', 2500);
   } catch(e) {
     dot.className = 'sync-dot error'; txt.textContent = 'Error';
-    showToast('Error al cargar: ' + e.message, 'error');
+    showToast('Error: ' + e.message, 'error');
     document.getElementById('loadingOverlay').classList.add('hidden');
   }
 }
@@ -344,7 +337,7 @@ async function loadData() {
 function changeMonth(dir) {
   const n = currentMonthIdx + dir;
   if (n < 0 || n >= MESES_ORDEN.length) return;
-  currentMonthIdx = n; selectedDia = null; activeFilter = null;
+  currentMonthIdx = n; selectedTurnoKey = null; activeFilter = null;
   mesData = null;
   document.getElementById('loadingOverlay').classList.remove('hidden');
   loadData();
@@ -353,7 +346,7 @@ function changeMonth(dir) {
 // ── FILTER ────────────────────────────────────────────────────────
 function toggleFilter(type) {
   activeFilter = activeFilter === type ? null : type;
-  selectedDia = null;
+  selectedTurnoKey = null;
   updateFilterUI(); renderDias(); renderAlumnosList();
 }
 function clearFilter() { activeFilter = null; updateFilterUI(); renderDias(); renderAlumnosList(); }
@@ -364,15 +357,15 @@ function updateFilterUI() {
   });
   const banner = document.getElementById('filterBanner'), bt = document.getElementById('filterBannerText');
   if (activeFilter) {
-    const labels = {pagadas:'✅ Mostrando: pagaron',pendientes:'⏳ Mostrando: pendientes',vacios:'🪑 Mostrando: lugares vacíos'};
-    const cls = {pagadas:'',pendientes:'pendientes-banner',vacios:'vacios-banner'};
-    banner.className = 'filter-banner show '+(cls[activeFilter]||'');
+    const labels = {pagadas:'✅ Mostrando: pagaron', pendientes:'⏳ Mostrando: pendientes de pago', vacios:'🪑 Mostrando: lugares vacíos'};
+    const cls    = {pagadas:'pagadas-banner', pendientes:'pendientes-banner', vacios:'vacios-banner'};
+    banner.className = 'filter-banner show ' + cls[activeFilter];
     bt.textContent = labels[activeFilter];
   } else banner.className = 'filter-banner';
 }
 
-function selectDia(dia) {
-  selectedDia = selectedDia === dia ? null : dia;
+function selectTurno(key) {
+  selectedTurnoKey = selectedTurnoKey === key ? null : key;
   activeFilter = null; updateFilterUI(); renderDias(); renderAlumnosList();
 }
 
@@ -385,23 +378,28 @@ function renderAll() {
   document.getElementById('prevMonth').disabled = currentMonthIdx === 0;
   document.getElementById('nextMonth').disabled = currentMonthIdx === MESES_ORDEN.length - 1;
 
-  const alumnos = mesData.alumnos || [];
-  const pagados = alumnos.filter(a=>a.pagado).length;
-  const pct = Math.round((alumnos.length/MAX_TOTAL)*100);
+  const alumnos   = mesData.alumnos || [];
+  const turnos    = mesData.turnos  || [];
+  const totalCap  = turnos.reduce((s, t) => s + t.capacidad, 0);
+  const totalOcup = alumnos.length;
+  const pagados   = alumnos.filter(a => a.pagado).length;
+  const pendientes= alumnos.filter(a => a.pendiente).length;
+  const libres    = turnos.reduce((s, t) => s + t.libres, 0);
+  const pct       = totalCap > 0 ? Math.round((totalOcup / totalCap) * 100) : 0;
 
   const saldo = mesData.saldo_neto || 0;
   const el = document.getElementById('saldoNeto');
-  el.textContent = fmt(saldo); el.className = 'saldo-value'+(saldo<0?' negative':'');
+  el.textContent = fmt(saldo); el.className = 'saldo-value' + (saldo < 0 ? ' negative' : '');
   document.getElementById('totalIngresos').textContent = fmt(mesData.total_ingresos);
-  document.getElementById('totalGastos').textContent = fmt(mesData.total_gastos);
-  document.getElementById('alumnosActivos').textContent = alumnos.length;
-  document.getElementById('ocupPct').textContent = pct+'%';
-  document.getElementById('ocupBar').style.width = pct+'%';
-  document.getElementById('cuotasPagadas').textContent = pagados;
-  document.getElementById('cuotasPendientes').textContent = alumnos.filter(a=>!a.pagado).length;
-  document.getElementById('lugaresVacios').textContent = MAX_TOTAL - alumnos.length;
+  document.getElementById('totalGastos').textContent   = fmt(mesData.total_gastos);
+  document.getElementById('alumnosActivos').textContent = totalOcup;
+  document.getElementById('capacidadTotal').textContent = ' / ' + totalCap + ' lugares';
+  document.getElementById('ocupPct').textContent  = pct + '%';
+  document.getElementById('ocupBar').style.width  = pct + '%';
+  document.getElementById('cuotasPagadas').textContent   = pagados;
+  document.getElementById('cuotasPendientes').textContent = pendientes;
+  document.getElementById('lugaresVacios').textContent    = libres;
 
-  // Ingresos detalle
   const ing = mesData.ingresos || {};
   document.getElementById('ingresosTotal').textContent = fmt(mesData.total_ingresos);
   document.getElementById('ingresosDetalle').innerHTML = [
@@ -411,7 +409,6 @@ function renderAll() {
     `<div class="breakdown-item"><span class="item-name">${n}</span><span class="item-val">${fmt(v)}</span></div>`
   ).join('') || '<div class="breakdown-item"><span class="item-name" style="color:#ccc">Sin datos</span></div>';
 
-  // Gastos detalle
   const gas = mesData.gastos || {};
   document.getElementById('gastosTotal').textContent = fmt(mesData.total_gastos);
   document.getElementById('gastosDetalle').innerHTML = [
@@ -423,322 +420,310 @@ function renderAll() {
   updateFilterUI(); renderDias(); renderAlumnosList();
 }
 
+// ── RENDER DIAS ───────────────────────────────────────────────────
 function renderDias() {
-  const alumnos = mesData?.alumnos || [];
-  const byDia = {}; DIAS_ORDEN.forEach(d=>byDia[d]={total:0,pagados:0});
-  alumnos.forEach(a=>{if(byDia[a.dia]){byDia[a.dia].total++;if(a.pagado)byDia[a.dia].pagados++;}});
-  document.getElementById('diasScroll').innerHTML = DIAS_ORDEN.map(dia=>{
-    const {total,pagados} = byDia[dia];
-    const pct = Math.round((total/MAX_POR_DIA)*100);
-    return `<div class="dia-chip ${selectedDia===dia?'active':''}" onclick="selectDia('${dia}')">
-      <div class="dia-name">${dia[0]+dia.slice(1).toLowerCase()}</div>
-      <div class="dia-alumnos">${total}</div>
-      <div class="dia-sub">${pagados} pag · ${MAX_POR_DIA-total} libres</div>
-      <div class="dia-bar"><div class="dia-bar-fill" style="width:${pct}%"></div></div>
-    </div>`;
-  }).join('');
+  const turnos = mesData?.turnos || [];
+  // Agrupar por día
+  const byDia = {};
+  DIAS_ORDEN.forEach(d => byDia[d] = []);
+  turnos.forEach(t => { if (byDia[t.dia]) byDia[t.dia].push(t); });
+
+  document.getElementById('diasScroll').innerHTML = DIAS_ORDEN
+    .filter(dia => byDia[dia].length > 0)
+    .map(dia => {
+      const ts = byDia[dia];
+      const chipsHtml = ts.map(t => {
+        const key = turnoKey(t.dia, t.turno);
+        const isActive = selectedTurnoKey === key;
+        const activeCls = isActive ? (activeFilter === 'pendientes' ? 'active-pendientes' : activeFilter === 'vacios' ? 'active-vacios' : 'active') : '';
+        // Dots: pagados=verde, pendientes=naranja, libres=gris
+        const dots = [
+          ...Array(t.pagados).fill('<div class="turno-dot pagado"></div>'),
+          ...Array(t.pendientes).fill('<div class="turno-dot pendiente"></div>'),
+          ...Array(t.libres).fill('<div class="turno-dot libre"></div>'),
+        ].join('');
+        return `<div class="turno-chip ${activeCls}" onclick="selectTurno('${key}')">
+          <div class="turno-name">${t.turno}</div>
+          <div class="turno-alumnos">${t.ocupados}<span style="font-size:14px;color:#aaa">/${t.capacidad}</span></div>
+          <div class="turno-sub">${t.pagados} pag · ${t.pendientes} pend · ${t.libres} libre${t.libres!==1?'s':''}</div>
+          <div class="turno-dots">${dots}</div>
+        </div>`;
+      }).join('');
+      return `<div class="dia-group">
+        <div class="dia-group-label">${dia[0]+dia.slice(1).toLowerCase()}</div>
+        <div class="dia-turnos">${chipsHtml}</div>
+      </div>`;
+    }).join('');
 }
 
+// ── RENDER ALUMNOS ────────────────────────────────────────────────
 function renderAlumnosList() {
   const alumnos = mesData?.alumnos || [];
-  const listEl = document.getElementById('alumnosList');
+  const turnos  = mesData?.turnos  || [];
+  const listEl  = document.getElementById('alumnosList');
   const titleEl = document.getElementById('listTitle');
   const countEl = document.getElementById('listCount');
-  let filtered = selectedDia ? alumnos.filter(a=>a.dia===selectedDia) : alumnos;
 
+  // Filtrar por turno seleccionado
+  let filtered = alumnos;
+  if (selectedTurnoKey) {
+    const [dia, turno] = selectedTurnoKey.split('||');
+    filtered = alumnos.filter(a => a.dia === dia && a.turno === turno);
+  }
+
+  // Filtrar por estado
   if (activeFilter === 'pagadas') {
-    filtered = filtered.filter(a=>a.pagado);
+    filtered = filtered.filter(a => a.pagado);
     titleEl.textContent = '✅ Pagaron';
   } else if (activeFilter === 'pendientes') {
-    filtered = filtered.filter(a=>!a.pagado);
+    filtered = filtered.filter(a => a.pendiente);
     titleEl.textContent = '⏳ Pendientes de pago';
   } else if (activeFilter === 'vacios') {
-    const source = selectedDia ? [selectedDia] : DIAS_ORDEN;
-    const byDia = {}; DIAS_ORDEN.forEach(d=>byDia[d]=0);
-    alumnos.forEach(a=>{if(byDia[a.dia]!==undefined)byDia[a.dia]++;});
+    // Mostrar lugares vacíos por turno
+    const turnosFiltrados = selectedTurnoKey
+      ? turnos.filter(t => turnoKey(t.dia, t.turno) === selectedTurnoKey)
+      : turnos;
     titleEl.textContent = '🪑 Lugares vacíos';
-    let html = '', total = 0;
-    source.forEach(dia=>{
-      const count = MAX_POR_DIA - byDia[dia]; total += count;
-      if(!count) return;
-      html += `<div style="padding:8px 0 4px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:600;border-bottom:1px solid var(--cream)">${dia[0]+dia.slice(1).toLowerCase()} — ${count} libre${count>1?'s':''}</div>`;
-      for(let i=0;i<count;i++){
-        html += `<div class="vacio-row" onclick="openModal('alumno','${dia}')">
+    let html = '', totalLibres = 0;
+    turnosFiltrados.forEach(t => {
+      if (t.libres === 0) return;
+      totalLibres += t.libres;
+      const diaLabel = t.dia[0] + t.dia.slice(1).toLowerCase();
+      html += `<div style="padding:8px 0 4px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--forest);font-weight:600;border-bottom:1px solid var(--cream)">${diaLabel} · ${t.turno} — ${t.libres} libre${t.libres>1?'s':''}</div>`;
+      for (let i = 0; i < t.libres; i++) {
+        html += `<div class="vacio-row" onclick="openModal('alumno','${t.dia}','${t.turno}')">
           <div class="alumno-avatar vacio">○</div>
-          <div class="alumno-info"><div class="alumno-nombre" style="color:#aaa">Lugar disponible</div><div class="alumno-turno">${dia[0]+dia.slice(1).toLowerCase()} · toque para agregar</div></div>
+          <div class="alumno-info">
+            <div class="alumno-nombre" style="color:#aaa">Lugar disponible</div>
+            <div class="alumno-turno">${diaLabel} · ${t.turno} · toque para agregar</div>
+          </div>
           <div class="alumno-monto"><div class="monto-val vacio">+</div></div>
         </div>`;
       }
     });
-    countEl.textContent = total + ' lugares';
+    countEl.textContent = totalLibres + ' lugar' + (totalLibres !== 1 ? 'es' : '');
     listEl.innerHTML = html || `<div class="empty-state"><div class="empty-icon">🎉</div><p>¡Taller completo!</p></div>`;
     return;
   } else {
-    titleEl.textContent = selectedDia ? selectedDia[0]+selectedDia.slice(1).toLowerCase() : 'Todos los alumnos';
+    titleEl.textContent = selectedTurnoKey
+      ? (() => { const [d,t] = selectedTurnoKey.split('||'); return d[0]+d.slice(1).toLowerCase() + ' · ' + t; })()
+      : 'Todos los alumnos';
   }
 
-  countEl.textContent = filtered.length + ' alumno'+(filtered.length!==1?'s':'');
-  if(!filtered.length){
+  countEl.textContent = filtered.length + ' alumno' + (filtered.length !== 1 ? 's' : '');
+  if (!filtered.length) {
     listEl.innerHTML = `<div class="empty-state"><div class="empty-icon">🌱</div><p>Sin alumnos para mostrar</p></div>`;
     return;
   }
-  const sorted = activeFilter==='pendientes' ? filtered : [...filtered].sort((a,b)=>b.pagado-a.pagado);
-  listEl.innerHTML = sorted.map(a=>{
-    const cls = a.pagado?'pagado':'pendiente';
-    return `<div class="alumno-row" onclick="openModal('pago',null,${JSON.stringify(a).replace(/'/g,'&apos;')})">
+
+  const sorted = activeFilter === 'pendientes' ? filtered : [...filtered].sort((a,b) => b.pagado - a.pagado);
+  listEl.innerHTML = sorted.map(a => {
+    const cls = a.pagado ? 'pagado' : 'pendiente';
+    const safeA = encodeURIComponent(JSON.stringify(a));
+    return `<div class="alumno-row" onclick="openModalAlumno('${safeA}')">
       <div class="alumno-avatar ${cls}">${initials(a.nombre)}</div>
       <div class="alumno-info">
         <div class="alumno-nombre">${a.nombre}</div>
-        <div class="alumno-turno">${a.dia[0]+a.dia.slice(1).toLowerCase()}${a.turno?' · '+a.turno:''}</div>
+        <div class="alumno-turno">${a.dia[0]+a.dia.slice(1).toLowerCase()} · ${a.turno||''}</div>
       </div>
       <div class="alumno-monto">
-        <div class="monto-val ${cls}">${a.pagado?fmt(a.total):'—'}</div>
-        <div class="monto-status">${a.pagado?'pagó':'pendiente'}</div>
+        <div class="monto-val ${cls}">${a.pagado ? fmt(a.total) : '—'}</div>
+        <div class="monto-status">${a.pagado ? 'pagó' : 'pendiente'}</div>
       </div>
     </div>`;
   }).join('');
 }
 
+function openModalAlumno(encoded) {
+  openModal('pago', null, null, JSON.parse(decodeURIComponent(encoded)));
+}
+
 // ── MODAL ─────────────────────────────────────────────────────────
-function openModal(type, dia=null, alumno=null) {
-  const backdrop = document.getElementById('modalBackdrop');
+function openModal(type, dia=null, turno=null, alumno=null) {
+  document.getElementById('modalBackdrop').classList.add('open');
   const title = document.getElementById('modalTitle');
-  const body = document.getElementById('modalBody');
-  backdrop.classList.add('open');
+  const body  = document.getElementById('modalBody');
 
   if (type === 'pago') {
-    // Tabs: Registrar Pago | Editar Datos
     title.textContent = alumno.nombre;
     body.innerHTML = `
       <div class="modal-tabs">
-        <button class="modal-tab active" onclick="switchTab('pago','tab-pago','tab-editar')">💰 Pago</button>
-        <button class="modal-tab" onclick="switchTab('editar','tab-pago','tab-editar')">✏️ Editar</button>
+        <button class="modal-tab active" onclick="switchTab('pago')">💰 Pago</button>
+        <button class="modal-tab" onclick="switchTab('editar')">✏️ Editar</button>
       </div>
       <div id="tab-pago">
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Seña $</label>
-            <input class="form-input" type="number" id="inp-sena" value="${alumno.sena||''}" placeholder="0">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Saldo $</label>
-            <input class="form-input" type="number" id="inp-saldo" value="${alumno.saldoPag||''}" placeholder="0">
-          </div>
+          <div class="form-group"><label class="form-label">Seña $</label>
+            <input class="form-input" type="number" id="inp-sena" value="${alumno.sena||''}" placeholder="0"></div>
+          <div class="form-group"><label class="form-label">Saldo $</label>
+            <input class="form-input" type="number" id="inp-saldo" value="${alumno.saldoPag||''}" placeholder="0"></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Arcilla $</label>
-            <input class="form-input" type="number" id="inp-arcilla" value="${alumno.arcilla||''}" placeholder="0">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Horneada $</label>
-            <input class="form-input" type="number" id="inp-horneada" value="${alumno.horneada||''}" placeholder="0">
-          </div>
+          <div class="form-group"><label class="form-label">Arcilla $</label>
+            <input class="form-input" type="number" id="inp-arcilla" value="${alumno.arcilla||''}" placeholder="0"></div>
+          <div class="form-group"><label class="form-label">Horneada $</label>
+            <input class="form-input" type="number" id="inp-horneada" value="${alumno.horneada||''}" placeholder="0"></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Seminario $</label>
-            <input class="form-input" type="number" id="inp-seminario" value="${alumno.seminario||''}" placeholder="0">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Otros $</label>
-            <input class="form-input" type="number" id="inp-otros" value="${alumno.otros||''}" placeholder="0">
-          </div>
+          <div class="form-group"><label class="form-label">Seminario $</label>
+            <input class="form-input" type="number" id="inp-seminario" value="${alumno.seminario||''}" placeholder="0"></div>
+          <div class="form-group"><label class="form-label">Otros $</label>
+            <input class="form-input" type="number" id="inp-otros" value="${alumno.otros||''}" placeholder="0"></div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Fecha de pago</label>
-          <input class="form-input" type="date" id="inp-fecha" value="${alumno.fechaPago ? alumno.fechaPago.split('/').reverse().join('-') : ''}">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Notas</label>
-          <input class="form-input" type="text" id="inp-notas" value="${alumno.notas||''}" placeholder="Opcional">
-        </div>
-        <button class="btn-primary" onclick="submitPago(${alumno.rowIndex})">Guardar pago en Sheet</button>
+        <div class="form-group"><label class="form-label">Fecha de pago</label>
+          <input class="form-input" type="date" id="inp-fecha" value="${alumno.fechaPago ? alumno.fechaPago.split('/').reverse().join('-') : ''}"></div>
+        <div class="form-group"><label class="form-label">Notas</label>
+          <input class="form-input" type="text" id="inp-notas" value="${alumno.notas||''}" placeholder="Opcional"></div>
+        <button class="btn-primary" onclick="submitPago(${alumno.rowIndex})">Guardar en Sheet</button>
       </div>
       <div id="tab-editar" style="display:none">
-        <div class="form-group">
-          <label class="form-label">Nombre</label>
-          <input class="form-input" type="text" id="inp-nombre-edit" value="${alumno.nombre}">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Teléfono</label>
-          <input class="form-input" type="tel" id="inp-tel-edit" value="${alumno.telefono||''}" placeholder="Sin 0 ni 15">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Horario</label>
-          <input class="form-input" type="text" id="inp-turno-edit" value="${alumno.turno||''}" placeholder="Ej: 19 a 21hs">
-        </div>
+        <div class="form-group"><label class="form-label">Nombre</label>
+          <input class="form-input" type="text" id="inp-nombre-edit" value="${alumno.nombre}"></div>
+        <div class="form-group"><label class="form-label">Teléfono</label>
+          <input class="form-input" type="tel" id="inp-tel-edit" value="${alumno.telefono||''}" placeholder="2994123456"></div>
+        <div class="form-group"><label class="form-label">Horario</label>
+          <input class="form-input" type="text" id="inp-turno-edit" value="${alumno.turno||''}" placeholder="Ej: 19 a 21hs"></div>
         <button class="btn-primary" onclick="submitEditarAlumno(${alumno.rowIndex})">Guardar cambios</button>
       </div>`;
 
   } else if (type === 'alumno') {
     title.textContent = 'Agregar alumno';
-    const preselDia = dia || selectedDia || '';
+    const turnos = mesData?.turnos || [];
+    // Build dia+turno options
+    const opts = turnos.map(t =>
+      `<option value="${t.dia}||${t.turno}" ${(dia===t.dia&&turno===t.turno)?'selected':''}>${t.dia[0]+t.dia.slice(1).toLowerCase()} · ${t.turno} (${t.libres} libre${t.libres!==1?'s':''})</option>`
+    ).join('');
     body.innerHTML = `
-      <div class="form-group">
-        <label class="form-label">Nombre y apellido</label>
-        <input class="form-input" type="text" id="inp-nombre" placeholder="Ej: María García" autofocus>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Teléfono</label>
-        <input class="form-input" type="tel" id="inp-tel" placeholder="2994123456">
-      </div>
+      <div class="form-group"><label class="form-label">Nombre y apellido</label>
+        <input class="form-input" type="text" id="inp-nombre" placeholder="Ej: María García" autofocus></div>
+      <div class="form-group"><label class="form-label">Teléfono</label>
+        <input class="form-input" type="tel" id="inp-tel" placeholder="2994123456"></div>
+      <div class="form-group"><label class="form-label">Día y turno</label>
+        <select class="form-select" id="inp-turno-sel">${opts}</select></div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Día</label>
-          <select class="form-select" id="inp-dia">
-            ${DIAS_ORDEN.map(d=>`<option value="${d}" ${d===preselDia?'selected':''}>${d[0]+d.slice(1).toLowerCase()}</option>`).join('')}
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Horario</label>
-          <input class="form-input" type="text" id="inp-turno" value="" placeholder="10 a 12hs">
-        </div>
+        <div class="form-group"><label class="form-label">Seña $</label>
+          <input class="form-input" type="number" id="inp-sena-nuevo" placeholder="0"></div>
+        <div class="form-group"><label class="form-label">Saldo $</label>
+          <input class="form-input" type="number" id="inp-saldo-nuevo" placeholder="0"></div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Seña $</label>
-          <input class="form-input" type="number" id="inp-sena-nuevo" placeholder="0">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Saldo $</label>
-          <input class="form-input" type="number" id="inp-saldo-nuevo" placeholder="0">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Fecha de pago</label>
-        <input class="form-input" type="date" id="inp-fecha-nuevo">
-      </div>
+      <div class="form-group"><label class="form-label">Fecha de pago</label>
+        <input class="form-input" type="date" id="inp-fecha-nuevo"></div>
       <button class="btn-primary" onclick="submitAgregarAlumno()">Agregar al Sheet</button>`;
 
   } else if (type === 'gasto') {
     title.textContent = 'Cargar gasto';
     body.innerHTML = `
-      <div class="form-group">
-        <label class="form-label">Tipo</label>
+      <div class="form-group"><label class="form-label">Tipo</label>
         <select class="form-select" id="inp-tipo-gasto">
           <option value="taller">Gastos de Taller</option>
           <option value="generales">Gastos Generales</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Concepto</label>
-        <input class="form-input" type="text" id="inp-concepto-gasto" placeholder="Ej: Electricista, Arcilla a granel...">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Monto $</label>
-        <input class="form-input" type="number" id="inp-monto-gasto" placeholder="0">
-      </div>
+        </select></div>
+      <div class="form-group"><label class="form-label">Concepto</label>
+        <input class="form-input" type="text" id="inp-concepto-gasto" placeholder="Ej: Electricista, arcilla..."></div>
+      <div class="form-group"><label class="form-label">Monto $</label>
+        <input class="form-input" type="number" id="inp-monto-gasto" placeholder="0"></div>
       <button class="btn-primary" onclick="submitGasto()">Guardar en Sheet</button>`;
 
   } else if (type === 'ingresoExtra') {
     title.textContent = 'Ingreso extra';
     body.innerHTML = `
-      <div class="form-group">
-        <label class="form-label">Concepto</label>
-        <input class="form-input" type="text" id="inp-concepto-extra" placeholder="Ej: Venta de piezas, Taller puntual...">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Monto $</label>
-        <input class="form-input" type="number" id="inp-monto-extra" placeholder="0">
-      </div>
+      <div class="form-group"><label class="form-label">Concepto</label>
+        <input class="form-input" type="text" id="inp-concepto-extra" placeholder="Ej: Venta de piezas..."></div>
+      <div class="form-group"><label class="form-label">Monto $</label>
+        <input class="form-input" type="number" id="inp-monto-extra" placeholder="0"></div>
       <button class="btn-primary" onclick="submitIngresoExtra()">Guardar en Sheet</button>`;
   }
 }
 
-function switchTab(active, id1, id2) {
-  document.getElementById(id1).style.display = active==='pago' ? '' : 'none';
-  document.getElementById(id2).style.display = active==='editar' ? '' : 'none';
-  document.querySelectorAll('.modal-tab').forEach((t,i)=>t.classList.toggle('active', (active==='pago'&&i===0)||(active==='editar'&&i===1)));
+function switchTab(active) {
+  document.getElementById('tab-pago').style.display   = active === 'pago'   ? '' : 'none';
+  document.getElementById('tab-editar').style.display = active === 'editar' ? '' : 'none';
+  document.querySelectorAll('.modal-tab').forEach((t,i) =>
+    t.classList.toggle('active', (active==='pago'&&i===0)||(active==='editar'&&i===1)));
 }
 
-function closeModal(e) { if(e.target===document.getElementById('modalBackdrop')) closeModalNow(); }
+function closeModal(e) { if (e.target === document.getElementById('modalBackdrop')) closeModalNow(); }
 function closeModalNow() { document.getElementById('modalBackdrop').classList.remove('open'); }
 
-// ── SUBMIT HANDLERS ───────────────────────────────────────────────
+// ── SUBMITS ───────────────────────────────────────────────────────
 async function submitPago(rowIndex) {
   const btn = document.querySelector('#tab-pago .btn-primary');
   btn.disabled = true; btn.textContent = 'Guardando...';
   try {
-    await apiPost({
-      action: 'registrarPago', rowIndex,
-      sena:      numVal('inp-sena'),
-      saldoPag:  numVal('inp-saldo'),
-      arcilla:   numVal('inp-arcilla'),
-      horneada:  numVal('inp-horneada'),
-      seminario: numVal('inp-seminario'),
-      otros:     numVal('inp-otros'),
-      notas:     document.getElementById('inp-notas').value,
+    await apiPost({ action:'registrarPago', rowIndex,
+      sena: numVal('inp-sena'), saldoPag: numVal('inp-saldo'),
+      arcilla: numVal('inp-arcilla'), horneada: numVal('inp-horneada'),
+      seminario: numVal('inp-seminario'), otros: numVal('inp-otros'),
+      notas: document.getElementById('inp-notas').value,
       fechaPago: document.getElementById('inp-fecha').value,
     });
-    showToast('Pago guardado ✓');
-    closeModalNow();
-    loadData();
-  } catch(e) { showToast(e.message, 'error'); btn.disabled=false; btn.textContent='Guardar pago en Sheet'; }
+    showToast('Pago guardado ✓'); closeModalNow(); loadData();
+  } catch(e) { showToast(e.message,'error'); btn.disabled=false; btn.textContent='Guardar en Sheet'; }
 }
 
 async function submitEditarAlumno(rowIndex) {
   const btn = document.querySelector('#tab-editar .btn-primary');
-  btn.disabled = true; btn.textContent = 'Guardando...';
+  btn.disabled=true; btn.textContent='Guardando...';
   try {
-    await apiPost({
-      action: 'editarAlumno', rowIndex,
-      nombre:   document.getElementById('inp-nombre-edit').value,
+    await apiPost({ action:'editarAlumno', rowIndex,
+      nombre: document.getElementById('inp-nombre-edit').value,
       telefono: document.getElementById('inp-tel-edit').value,
-      turno:    document.getElementById('inp-turno-edit').value,
+      turno: document.getElementById('inp-turno-edit').value,
     });
-    showToast('Alumno actualizado ✓');
-    closeModalNow(); loadData();
+    showToast('Alumno actualizado ✓'); closeModalNow(); loadData();
   } catch(e) { showToast(e.message,'error'); btn.disabled=false; btn.textContent='Guardar cambios'; }
 }
 
 async function submitAgregarAlumno() {
   const nombre = document.getElementById('inp-nombre').value.trim();
-  if(!nombre){ showToast('El nombre es obligatorio','error'); return; }
+  if (!nombre) { showToast('El nombre es obligatorio','error'); return; }
+  const selVal = document.getElementById('inp-turno-sel').value;
+  const [dia, turno] = selVal.split('||');
+  // Obtener firstRow/lastRow de mesData._meta
+  const key = dia + '||' + turno;
+  const meta = mesData._meta?.estructuraTurnos?.[key];
+  if (!meta) { showToast('No se encontró el turno en la estructura','error'); return; }
   const btn = document.querySelector('#modalBody .btn-primary');
   btn.disabled=true; btn.textContent='Guardando...';
   try {
-    await apiPost({
-      action: 'agregarAlumno',
-      nombre, dia: document.getElementById('inp-dia').value,
-      telefono: document.getElementById('inp-tel').value,
-      turno:    document.getElementById('inp-turno').value,
-      sena:     numVal('inp-sena-nuevo'),
-      saldoPag: numVal('inp-saldo-nuevo'),
+    await apiPost({ action:'agregarAlumno', dia, turno,
+      firstRow: meta.firstRow, lastRow: meta.lastRow,
+      nombre, telefono: document.getElementById('inp-tel').value,
+      sena: numVal('inp-sena-nuevo'), saldoPag: numVal('inp-saldo-nuevo'),
       fechaPago: document.getElementById('inp-fecha-nuevo').value,
     });
-    showToast(nombre + ' agregado ✓');
-    closeModalNow(); loadData();
+    showToast(nombre + ' agregado ✓'); closeModalNow(); loadData();
   } catch(e) { showToast(e.message,'error'); btn.disabled=false; btn.textContent='Agregar al Sheet'; }
 }
 
 async function submitGasto() {
   const concepto = document.getElementById('inp-concepto-gasto').value.trim();
   const monto    = numVal('inp-monto-gasto');
-  if(!concepto||!monto){ showToast('Completá concepto y monto','error'); return; }
+  if (!concepto || !monto) { showToast('Completá concepto y monto','error'); return; }
   const btn = document.querySelector('#modalBody .btn-primary');
   btn.disabled=true; btn.textContent='Guardando...';
   try {
-    await apiPost({ action:'cargarGasto', tipo: document.getElementById('inp-tipo-gasto').value, concepto, monto });
-    showToast('Gasto cargado ✓');
-    closeModalNow(); loadData();
+    await apiPost({ action:'cargarGasto',
+      tipo: document.getElementById('inp-tipo-gasto').value,
+      concepto, monto, _meta: mesData._meta
+    });
+    showToast('Gasto cargado ✓'); closeModalNow(); loadData();
   } catch(e) { showToast(e.message,'error'); btn.disabled=false; btn.textContent='Guardar en Sheet'; }
 }
 
 async function submitIngresoExtra() {
   const concepto = document.getElementById('inp-concepto-extra').value.trim();
   const monto    = numVal('inp-monto-extra');
-  if(!concepto||!monto){ showToast('Completá concepto y monto','error'); return; }
+  if (!concepto || !monto) { showToast('Completá concepto y monto','error'); return; }
   const btn = document.querySelector('#modalBody .btn-primary');
   btn.disabled=true; btn.textContent='Guardando...';
   try {
-    await apiPost({ action:'cargarIngresoExtra', concepto, monto });
-    showToast('Ingreso extra guardado ✓');
-    closeModalNow(); loadData();
+    await apiPost({ action:'cargarIngresoExtra', concepto, monto, _meta: mesData._meta });
+    showToast('Ingreso extra guardado ✓'); closeModalNow(); loadData();
   } catch(e) { showToast(e.message,'error'); btn.disabled=false; btn.textContent='Guardar en Sheet'; }
 }
 
-const numVal = id => { const v=parseFloat(document.getElementById(id)?.value); return isNaN(v)?0:v; };
+const numVal = id => { const v = parseFloat(document.getElementById(id)?.value); return isNaN(v) ? 0 : v; };
 
 loadData();
 </script>
